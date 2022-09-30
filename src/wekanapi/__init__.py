@@ -13,7 +13,7 @@ class WekanApi:
         else:
             api_response = self.session.post(
                 "{}{}".format(self.api_url, url),
-                data=data,
+                json=data,
                 headers={"Authorization": "Bearer {}".format(self.token)} if authed else {},
                 proxies=self.proxies
             )
