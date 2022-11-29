@@ -108,7 +108,7 @@ class Card:
     def pprint(self, indent=0):
         pprint = "{}- {}".format("  " * indent, self.title)
         cardinfo = self.get_card_info()
-        if "dueAt" in cardinfo:
+        if "dueAt" in cardinfo and cardinfo["dueAt"] is not None:
             pdate = datetime.datetime.strptime(cardinfo["dueAt"], "%Y-%m-%dT%H:%M:%S.%fZ")
             pprint += "\n{}- Due at: {}".format("  " * (indent+1), pdate)
         for checklist in self.get_checklists():
