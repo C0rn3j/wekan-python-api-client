@@ -53,6 +53,12 @@ class Cardslist:
         cards_data = self.api.api_call("/api/boards/{}/lists/{}/cards".format(self.board.id, self.id))
         return [Card(self.api, self, card_data) for card_data in cards_data if id in card_data['_id']]
 
+    def get_cardlist_info(self):
+        info_data = self.api.api_call("/api/boards/{}/lists/{}".format(
+            self.board.id,
+            self.id))
+        return info_data
+
     def pprint(self, indent=0):
         pprint = "{}- {}".format("  " * indent, self.title)
         for cards in self.get_cards():
@@ -104,6 +110,13 @@ class Card:
             self.cardslist.board.id,
             self.id))
         return [Checklist(self.api, self, checklist_data) for checklist_data in checklists_data]
+
+    def edit_card(self, data):
+        call_api_result = self.api.api_call("/api/boards/{}/lists/{}/cards/{}".format(
+            self.cardslist.board.id,
+            self.cardslist.id,
+            self.id), data, method='PUT')
+        return call_api_result
 
     def pprint(self, indent=0):
         pprint = "{}- {}".format("  " * indent, self.title)
